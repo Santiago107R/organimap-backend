@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AulaModule } from './aula/aula.module';
 import { CommonModule } from './common/common.module';
+import { CursoModule } from './curso/curso.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -28,6 +30,10 @@ import { CommonModule } from './common/common.module';
     AulaModule,
 
     CommonModule,
+
+    CursoModule,
+
+    FilesModule,
   ],
   controllers: [],
 })

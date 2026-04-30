@@ -14,8 +14,9 @@ export class CreateAulaDto {
     @IsNumber()
     @IsPositive()
     @Min(1)
-    capacidad: number;
+    capacity: number;
 
+    @IsOptional()
     @IsIn(['available', 'unavailable', 'busy'])
-    state: State;
+    state?: State;
 }
