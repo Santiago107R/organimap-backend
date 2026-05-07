@@ -1,50 +1,60 @@
-import { type Response } from 'express';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, UploadedFile, BadRequestException, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  UploadedFile,
+  UseInterceptors,
+  BadRequestException,
+  Res,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { FilesService } from './files.service';
+import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { fileFilter } from './helpers/fileFilter.helper';
 
+import type { Response } from 'express';
+import { diskStorage } from 'multer';
+import { FilesService } from './files.service';
 
+import { fileFilter, fileNamer } from './helpers';
+
+@ApiTags('Files - Get and Upload')
 @Controller('files')
 export class FilesController {
   constructor(
     private readonly filesService: FilesService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   @Get('map/:imageName')
-  findMapaImage(
+  findProductImage(
     @Res() res: Response,
-    @Param('imageName') imageName: string
+    @Param('imageName') imageName: string,
   ) {
-    const cloudName = this.configService.get('CLOUDINARY_CLOUD_NAME');
+    const path = this.filesService.getStaticFileImage(imageName);
 
-    const cloudinaryUrl = `https://res.cloudinary.com/${cloudName}/image/upload/map/${imageName}`;
-
-    return res.redirect(cloudinaryUrl);
+    res.sendFile(path);
   }
 
   @Post('map')
-  @UseInterceptors(FileInterceptor('file', {
-    fileFilter: fileFilter,
-  }))
-  async uploadProductImage(@UploadedFile() file: Express.Multer.File) {
-
+  @UseInterceptors(
+    FileInterceptor('file', {
+      fileFilter: fileFilter,
+      storage: diskStorage({
+        destination: './static/uploads',
+        filename: fileNamer,
+      }),
+    }),
+  )
+  uploadFileImage(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
-      throw new BadRequestException('Make sure that file is an image')
+      throw new BadRequestException('Make sure that the file is an image');
     }
 
-    try {
-      const result = await this.filesService.uploadToCloudinary(file)
+    const secureUrl = `${this.configService.get('HOST_API')}/files/map/${
+      file.filename
+    }`;
 
-      return {
-        secureUrl: result.secure_url.replace(/\/upload\//g, '/upload/f_auto,q_auto/')
-      }
-    } catch (error) {
-      throw new BadRequestException('Error uploading image to Cloudinary')
-    }
-
-
+    return { secureUrl, fileName: file.filename };
   }
 }

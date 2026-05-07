@@ -1,44 +1,20 @@
-import { join } from 'path';
-import { BadRequestException, Injectable } from '@nestjs/common';
 import { existsSync } from 'fs';
-import { ConfigService } from '@nestjs/config';
-import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
-import { createReadStream } from 'streamifier';
+import { join } from 'path';
+
+import { Injectable, BadRequestException } from '@nestjs/common';
+
 
 @Injectable()
 export class FilesService {
-  constructor(private readonly configService: ConfigService) {
-    cloudinary.config({
-      cloud_name: this.configService.get('CLOUDINARY_CLOUD_NAME'),
-      api_key: this.configService.get('CLOUDINARY_API_KEY'),
-      api_secret: this.configService.get('CLOUDINARY_API_SECRET')
-    })
-  }
+    getStaticFileImage(imageName: string) {
 
-  async uploadToCloudinary(file: Express.Multer.File): Promise<UploadApiResponse> {
-    return new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        {
-          folder: 'map',
-          use_filename: true,
-          unique_filename: true,
-          format: 'webp',
-          transformation: [
-            { width: 1000, crop: 'limit' },
-            { quality: 'auto' }
-          ]
-        },
-        (error, result) => {
-          if (error) return reject(error);
+        const path = join(process.cwd(), 'static/uploads', imageName);
 
-          if (!result) {
-            return reject(new Error('Cloudinary upload result is undefined'));
-          }
+        if (!existsSync(path))
+            throw new BadRequestException(`No product found with image ${imageName}`);
 
-          resolve(result);
-        },
-      );
-      createReadStream(file.buffer).pipe(uploadStream);
-    })
-  }
+        return path;
+    }
+
+
 }

@@ -13,12 +13,11 @@ import { FilesModule } from './files/files.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        // ssl: configService.get('STAGE') === 'prod',
         ssl: false,
         type: 'postgres',
         host: configService.get('DB_HOST'),
         port: +(configService.get('DB_PORT') ?? 5432),
-        database: configService.get('DB_NAME'),
+        database: configService.get('DB_DATABASE'),
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         autoLoadEntities: true,
