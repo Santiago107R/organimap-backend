@@ -6,7 +6,9 @@ export class Aula {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('text')
+    @Column('text', {
+        unique: true,
+    })
     name: string;
 
     @Column('text', {

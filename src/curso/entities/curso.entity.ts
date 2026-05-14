@@ -5,7 +5,9 @@ export class Curso {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('text')
+    @Column('text', {
+        unique: true,
+    })
     name: string;
 
     @Column('text')

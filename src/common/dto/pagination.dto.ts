@@ -1,5 +1,5 @@
 import { Type } from "class-transformer"
-import { IsIn, IsOptional, IsPositive, Min } from "class-validator"
+import { IsIn, IsOptional, IsPositive, IsString, Min } from "class-validator"
 import { State } from "src/aula/interfaces/state-values"
 
 export class PaginationDto {
@@ -11,6 +11,10 @@ export class PaginationDto {
     @IsOptional()
     @Type(() => Number)
     offset?: number
+
+    @IsOptional()
+    @IsString()
+    query: string;
 
     @IsOptional()
     @IsIn(['available', 'unavailable', 'busy'])

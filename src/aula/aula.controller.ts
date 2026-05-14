@@ -18,9 +18,9 @@ export class AulaController {
     return this.aulaService.findAll(paginationDto);
   }
 
-  @Get(':term')
-  findOne(@Param('term') term: string) {
-    return this.aulaService.findOne(term);
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.aulaService.findOne(id);
   }
 
   @Patch(':id')

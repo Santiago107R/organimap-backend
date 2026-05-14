@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreateAulaDto } from './dto/create-aula.dto';
 import { UpdateAulaDto } from './dto/update-aula.dto';
-import type { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Aula } from './entities/aula.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { State } from './interfaces/state-values';
-import { type PaginationDto } from 'src/common/dto/pagination.dto';
-import { isUUID } from 'class-validator'
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class AulaService {
@@ -33,49 +32,47 @@ export class AulaService {
   }
 
   async findAll(paginationDto: PaginationDto) {
-    const { limit = 10, offset = 0, state = undefined } = paginationDto
+    const { limit = 10, offset = 0, state = undefined, query = undefined } = paginationDto
 
-    const whereCondition: any = {}
+    const where: any = {};
 
     if (state !== undefined) {
-      whereCondition.state = state
+      where.state = state;
+    }
+
+    if (query !== undefined) {
+      where.name = ILike(`%${query}%`);
     }
 
     try {
       const [aulas, total] = await this.AulaRepository.findAndCount({
         take: limit,
         skip: offset,
-        where: whereCondition,
+        where,
       })
 
-      const pages = Math.ceil(total / limit)
+      const pages = limit > 0 ? Math.ceil(total / limit) : 0;
 
-      return { total, pages, aulas }
+      return {
+        total,
+        pages,
+        aulas
+      }
     } catch (error) {
       this.handleError(error)
     }
   }
 
-  async findOne(term: string) {
-    let aula: Aula | null
+  async findOne(id: string) {
+    const aula = await this.AulaRepository.findOneBy({ id })
 
-    if (isUUID(term)) {
-      aula = await this.AulaRepository.findOneBy({ id: term })
-    } else {
-      const queryBuilder = this.AulaRepository.createQueryBuilder('aula')
-      aula = await queryBuilder.where('LOWER(name) =:name', {
-        name: term.trim().toLowerCase()
-      })
-        .getOne()
-    }
+    if (!aula) throw new NotFoundException(`Aula with id or name ${id} not found`)
 
-    if (!aula) throw new NotFoundException(`Aula with id or name ${term} not found`)
-
-      return aula
+    return aula
   }
 
   async update(id: string, updateAulaDto: UpdateAulaDto) {
-    const aula = await this.AulaRepository.preload({id, ...updateAulaDto})
+    const aula = await this.AulaRepository.preload({ id, ...updateAulaDto })
 
     if (!aula) throw new NotFoundException(`Aula with id or name ${id} not found`)
 
