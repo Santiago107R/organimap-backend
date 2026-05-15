@@ -7,6 +7,6 @@ import { Aula } from './entities/aula.entity';
 @Module({
   controllers: [AulaController],
   providers: [AulaService],
-  imports: [TypeOrmModule.forFeature([Aula])],
+  imports: [TypeOrmModule.forFeature([Aula,])],
 })
 export class AulaModule {}

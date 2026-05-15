@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -71,6 +71,14 @@ export class AuthService {
 
     return token;
   }
+
+  async findOne(id: string) {
+    const user = this.userRespository.findOneBy({id})
+
+    if (!user) throw new NotFoundException(`User with id ${id} not found`)
+
+    return user
+  } 
 
   private handleDBErrors(error: any): never {
     if (error.code === "23505")

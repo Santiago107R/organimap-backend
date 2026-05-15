@@ -4,8 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AulaModule } from './aula/aula.module';
 import { CommonModule } from './common/common.module';
 import { CursoModule } from './curso/curso.module';
+import { DocenteAulaModule } from './docente-aula/docente-aula.module';
 import { FilesModule } from './files/files.module';
 import { MateriaModule } from './materia/materia.module';
+import { MapaModule } from './mapa/mapa.module';
 
 @Module({
   imports: [
@@ -33,9 +35,13 @@ import { MateriaModule } from './materia/materia.module';
 
     CursoModule,
 
+    DocenteAulaModule,
+
     FilesModule,
 
     MateriaModule,
+
+    MapaModule,
   ],
   controllers: [],
 })

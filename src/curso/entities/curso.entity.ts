@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { DocenteAula } from "../../docente-aula/entities/docente-aula.entity";
 
 @Entity()
 export class Curso {
@@ -15,4 +16,10 @@ export class Curso {
 
     @Column('int')
     numberOfStudents: number;
+
+    @OneToMany(
+        () => DocenteAula,
+        (docenteAula) => docenteAula.curso,
+    )
+    docenteAula: DocenteAula;
 }

@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { State } from "../interfaces/state-values";
+import { DocenteAula } from "../../docente-aula/entities/docente-aula.entity";
 
 @Entity()
 export class Aula {
@@ -24,4 +25,10 @@ export class Aula {
         default: State.AVAILABLE
     })
     state: State;
+
+    @OneToMany(
+        () => DocenteAula,
+        (docenteAula) => docenteAula.aula,
+    )
+    docenteAula: DocenteAula;
 }
