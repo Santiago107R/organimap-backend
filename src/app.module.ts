@@ -18,7 +18,6 @@ import { AulaSocketModule } from './aula-socket/aula-socket.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        ssl: false,
         type: 'postgres',
         host: configService.get('DB_HOST'),
         port: +(configService.get('DB_PORT') ?? 5432),
@@ -27,6 +26,7 @@ import { AulaSocketModule } from './aula-socket/aula-socket.module';
         password: configService.get('DB_PASSWORD'),
         autoLoadEntities: true,
         synchronize: false,
+        ssl: true,
       }),
       inject: [ConfigService],
     }),
