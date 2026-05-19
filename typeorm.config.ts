@@ -1,9 +1,17 @@
 import * as dotenv from "dotenv";
+import { existsSync } from "fs";
 import { join } from "path";
 import { DataSource } from "typeorm";
 
+const envLocalFile = join(__dirname, '.env.local');
 const envFile = join(__dirname, '.env');
-dotenv.config({ path: envFile });
+
+if (existsSync(envLocalFile)) {
+    dotenv.config({ path: envLocalFile, override: true });
+}
+if (existsSync(envFile)) {
+    dotenv.config({ path: envFile, override: true });
+}
 
 const stage = process.env.STAGE || 'dev';
 const dbHost = stage === 'dev'
