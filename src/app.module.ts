@@ -9,6 +9,7 @@ import { FilesModule } from './files/files.module';
 import { MateriaModule } from './materia/materia.module';
 import { MapaModule } from './mapa/mapa.module';
 import { AuthModule } from './auth/auth.module';
+import { AulaSocketModule } from './aula-socket/aula-socket.module';
 
 @Module({
   imports: [
@@ -45,6 +46,8 @@ import { AuthModule } from './auth/auth.module';
     DocenteAulaModule,
     
     FilesModule,
+    
+    AulaSocketModule,
 
   ],
   controllers: [],
