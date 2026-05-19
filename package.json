@@ -22,9 +22,9 @@
     "migration:generate": "cross-env STAGE=dev yarn typeorm migration:generate -d typeorm.config.ts",
     "migration:run-dev": "cross-env STAGE=dev yarn typeorm migration:run -d typeorm.config.ts",
     "migration:revert-dev": "cross-env STAGE=dev yarn typeorm migration:revert -d typeorm.config.ts",
-    "migration:generate-prod": "cross-env STAGE=prod yarn typeorm migration:generate -d typeorm.config.ts",
-    "migration:run-prod": "cross-env STAGE=prod yarn typeorm migration:run -d typeorm.config.ts",
-    "migration:revert-prod": "cross-env STAGE=prod yarn typeorm migration:revert -d typeorm.config.ts"
+    "migration:generate-prod": "yarn typeorm migration:generate -d typeorm.config.ts",
+    "migration:run-prod": "yarn typeorm migration:run -d dist/typeorm.config.js",
+    "migration:revert-prod": "yarn typeorm migration:revert -d typeorm.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
