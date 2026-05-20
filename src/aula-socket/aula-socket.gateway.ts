@@ -25,12 +25,22 @@ export class AulaSocketGateway {
   }
 
   @SubscribeMessage('findOneAulaSocket')
-  async findOne(@MessageBody() id: string) {
-    return this.aulaSocketService.findOne(id);
+  async findOne(
+    @MessageBody() id: string,
+    @ConnectedSocket() client: Socket,    
+  ) {
+    const aula = await this.aulaSocketService.findOne(id);
+    client.emit('aulaUpdated', aula);
+
   }
 
   async broadcastAulas(paginationDto?: any) {
     const aulas = await this.aulaSocketService.findAll(paginationDto);
     this.server.emit('aulasUpdated', aulas);
+  }
+
+  async broadcastAula(id: string) {
+    const aula = await this.aulaSocketService.findOne(id);
+    this.server.emit('aulaUpdated', aula);
   }
 }
