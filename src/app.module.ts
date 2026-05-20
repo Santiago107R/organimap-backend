@@ -25,7 +25,7 @@ import { AulaSocketModule } from './aula-socket/aula-socket.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true,
         ssl: true,
         extra: {
           ssl: {
