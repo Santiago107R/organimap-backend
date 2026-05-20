@@ -3,8 +3,9 @@ import {
   SubscribeMessage,
   MessageBody,
   WebSocketServer,
+  ConnectedSocket,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Socket, Server } from 'socket.io';
 import { AulaSocketService } from './aula-socket.service';
 
 @WebSocketGateway({ cors: { origin: '*' } })
@@ -12,11 +13,15 @@ export class AulaSocketGateway {
   @WebSocketServer()
   server!: Server;
 
-  constructor(private readonly aulaSocketService: AulaSocketService) {}
+  constructor(private readonly aulaSocketService: AulaSocketService) { }
 
   @SubscribeMessage('findAllAulaSocket')
-  async findAll(@MessageBody() paginationDto?: any) {
-    return this.aulaSocketService.findAll(paginationDto);
+  async findAll(
+    @MessageBody() paginationDto: any,
+    @ConnectedSocket() client: Socket
+  ) {
+    const aulas = await this.aulaSocketService.findAll(paginationDto);
+    client.emit('aulasUpdated', aulas);
   }
 
   @SubscribeMessage('findOneAulaSocket')
