@@ -90,7 +90,7 @@ export class AuthService {
     if (roles && roles.length > 0) {
       const cleanRoles = roles.map(role => role.trim());
 
-      queryBuilder.andWhere('user.roles && :cleanRoles::text[]', { cleanRoles });
+      queryBuilder.andWhere('user.roles @> :cleanRoles::text[]', { cleanRoles });
     }
 
     try {
