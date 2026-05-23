@@ -7,8 +7,8 @@ import { DocenteAula } from './entities/docente-aula.entity';
 import { User } from '../auth/entities/user.entity';
 import { Aula } from '../aula/entities/aula.entity';
 import { Curso } from '../curso/entities/curso.entity';
-import { handleDbError } from 'src/common/utils/handle-errors';
-import { Materia } from 'src/materia/entities/materia.entity';
+import { handleDbError } from '../common/utils/handle-errors';
+import { Materia } from '../materia/entities/materia.entity';
 
 @Injectable()
 export class DocenteAulaService {
