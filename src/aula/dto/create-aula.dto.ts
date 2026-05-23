@@ -4,7 +4,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateAulaDto {
     @ApiProperty({
-        description: 'Aula name',
+        description: 'Aula Name',
         nullable: false,
         minLength: 1,
     })
@@ -13,7 +13,7 @@ export class CreateAulaDto {
     name: string;
 
     @ApiProperty({
-        description: 'Aula description',
+        description: 'Aula Description',
         nullable: true,
         minLength: 1,
     })
@@ -23,7 +23,7 @@ export class CreateAulaDto {
     description?: string;
 
     @ApiProperty({
-        description: 'Aula capacity',
+        description: 'Aula Capacity',
         minimum: 1,
     })
     @IsNumber()
@@ -32,10 +32,10 @@ export class CreateAulaDto {
     capacity: number;
 
     @ApiProperty({
-        description: 'Aula state',
+        description: 'Aula State',
         default: State.AVAILABLE,
     })
     @IsOptional()
     @IsIn(['available', 'unavailable', 'busy'])
-    state?: State;
+    state: State;
 }

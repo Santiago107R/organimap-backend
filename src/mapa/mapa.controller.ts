@@ -11,7 +11,7 @@ export class MapaController {
   constructor(private readonly mapaService: MapaService) { }
 
   @Post()
-  @ApiResponse({ status: 201, description: 'Aula was created', type: Mapa })
+  @ApiResponse({ status: 201, description: 'Mapa was created', type: Mapa })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden. Token related' })

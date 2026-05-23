@@ -11,7 +11,7 @@ export class MateriaController {
   constructor(private readonly materiaService: MateriaService) {}
 
   @Post()
-  @ApiResponse({ status: 201, description: 'Aula was created', type: Materia })
+  @ApiResponse({ status: 201, description: 'Materia was created', type: Materia })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden. Token related' })

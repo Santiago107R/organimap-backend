@@ -10,5 +10,8 @@ import { Curso } from './entities/curso.entity';
   imports: [
     TypeOrmModule.forFeature([Curso,]),
   ],
+  exports: [
+    CursoService,
+  ]
 })
 export class CursoModule {}

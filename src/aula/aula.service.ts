@@ -6,7 +6,7 @@ import { Aula } from './entities/aula.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { State } from './interfaces/state-values';
 import { PaginationDto } from '../common/dto/pagination.dto';
-import { handleDbError } from 'src/common/utils/handle-errors';
+import { handleDbError } from '../common/utils/handle-errors';
 
 @Injectable()
 export class AulaService {
@@ -99,5 +99,19 @@ export class AulaService {
     await this.AulaRepository.remove(aula)
 
     return `DELETE HAS BEEN SUCCESSFUL`;
+  }
+
+  async deleteAllRegisters() {
+    const query = this.AulaRepository.createQueryBuilder('aula');
+
+    try {
+
+      return await query
+        .delete()
+        .where({})
+        .execute();
+    } catch (error) {
+      handleDbError(error)
+    }
   }
 }

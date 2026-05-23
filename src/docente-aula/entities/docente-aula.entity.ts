@@ -60,7 +60,7 @@ export class DocenteAula {
         { eager: true, nullable: false },
     )
     @JoinColumn({ name: 'materiaId' })
-    materia: Curso;
+    materia: Materia;
 
     @ApiProperty({
         example: 'Lunes',

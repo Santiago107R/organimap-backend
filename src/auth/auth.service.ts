@@ -145,4 +145,17 @@ export class AuthService {
     return `DELETE HAS BEEN SUCCESSFUL`;
   }
 
+  async deleteAllRegisters() {
+    const query = this.userRespository.createQueryBuilder('user');
+
+    try {
+
+      return await query
+        .delete()
+        .where({})
+        .execute();
+    } catch (error) {
+      handleDbError(error)
+    }
+  }
 }

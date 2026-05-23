@@ -8,5 +8,8 @@ import { Mapa } from './entities/mapa.entity';
   imports: [TypeOrmModule.forFeature([Mapa,])],
   controllers: [MapaController],
   providers: [MapaService],
+  exports: [
+    MapaService,
+  ]
 })
 export class MapaModule {}

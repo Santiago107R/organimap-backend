@@ -5,7 +5,7 @@ import { ILike, Repository } from 'typeorm';
 import { Mapa } from './entities/mapa.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from '../common/dto/pagination.dto';
-import { handleDbError } from 'src/common/utils/handle-errors';
+import { handleDbError } from '../common/utils/handle-errors';
 
 @Injectable()
 export class MapaService {
@@ -78,6 +78,20 @@ export class MapaService {
     await this.mapaRepository.remove(mapa);
 
     return `DELETE WAS EXECUTED SUCCESSFULLY`;
+  }
+
+  async deleteAllRegisters() {
+    const query = this.mapaRepository.createQueryBuilder('mapa');
+
+    try {
+
+      return await query
+        .delete()
+        .where({})
+        .execute();
+    } catch (error) {
+      handleDbError(error)
+    }
   }
 
 }

@@ -5,7 +5,7 @@ import { ILike, Repository } from 'typeorm';
 import { Materia } from './entities/materia.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from '../common/dto/pagination.dto';
-import { handleDbError } from 'src/common/utils/handle-errors';
+import { handleDbError } from '../common/utils/handle-errors';
 
 @Injectable()
 export class MateriaService {
@@ -87,6 +87,20 @@ export class MateriaService {
     await this.materiaRepository.remove(materia);
 
     return `DELETE WAS EXECUTED SUCCESSFULLY`;
+  }
+
+  async deleteAllRegisters() {
+    const query = this.materiaRepository.createQueryBuilder('materia');
+
+    try {
+
+      return await query
+        .delete()
+        .where({})
+        .execute();
+    } catch (error) {
+      handleDbError(error)
+    }
   }
 
 }

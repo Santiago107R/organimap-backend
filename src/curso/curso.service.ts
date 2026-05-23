@@ -4,8 +4,8 @@ import { UpdateCursoDto } from './dto/update-curso.dto';
 import { ILike, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Curso } from './entities/curso.entity';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { handleDbError } from 'src/common/utils/handle-errors';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { handleDbError } from '../common/utils/handle-errors';
 
 @Injectable()
 export class CursoService {
@@ -87,6 +87,20 @@ export class CursoService {
     await this.cursoRepository.remove(curso);
 
     return `DELETE WAS EXECUTED SUCCESSFULLY`;
+  }
+
+  async deleteAllRegisters() {
+    const query = this.cursoRepository.createQueryBuilder('curso');
+
+    try {
+
+      return await query
+        .delete()
+        .where({})
+        .execute();
+    } catch (error) {
+      handleDbError(error)
+    }
   }
 
 }

@@ -10,6 +10,7 @@ import { MateriaModule } from './materia/materia.module';
 import { MapaModule } from './mapa/mapa.module';
 import { AuthModule } from './auth/auth.module';
 import { AulaSocketModule } from './aula-socket/aula-socket.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -53,6 +54,8 @@ import { AulaSocketModule } from './aula-socket/aula-socket.module';
     FilesModule,
     
     AulaSocketModule,
+    
+    SeedModule,
 
   ],
   controllers: [],
