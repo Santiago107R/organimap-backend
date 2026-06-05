@@ -2,13 +2,14 @@ import { Controller, Get, Post, Body, Res, UseGuards, Query, Param, ParseUUIDPip
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-user-auth.dto';
 import { LoginUserDto } from './dto/login-auth.dto';
-import { GetUser } from './decorators';
+import { Auth, GetUser } from './decorators';
 import { User } from './entities/user.entity';
 import { type Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { PaginationDto } from '../common/dto/pagination.dto';
 import type { UpdateAuthDto } from './dto/update-user-auth.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ValidRoles } from './interfaces';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -40,7 +41,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async loginUser(@Body() loginUserDto: LoginUserDto, @Res({ passthrough: true }) res: Response) {
     const { token, ...user } = await this.authService.login(loginUserDto)
-    
+
     res.cookie('access_token', token, {
       httpOnly: true,
       secure: process.env.STAGE === 'prod',
@@ -87,6 +88,7 @@ export class AuthController {
   }
 
   @Get('user')
+  @Auth(ValidRoles.admin, ValidRoles.secretario)
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

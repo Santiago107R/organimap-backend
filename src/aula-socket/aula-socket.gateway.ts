@@ -26,6 +26,7 @@ export class AulaSocketGateway {
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden. Token related' })
+  
   async findAll(
     @MessageBody() paginationDto: PaginationDto,
     @ConnectedSocket() client: Socket
