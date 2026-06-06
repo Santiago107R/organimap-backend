@@ -1,14 +1,13 @@
 import * as bcrypt from 'bcrypt';
 import { State } from '../../aula/interfaces/state-values';
 
-export type EscolarRoles = 'admin' | 'docente' | 'secretaria' | 'supervisor';
+export type EscolarRoles = 'admin' | 'docente' | 'secretario' | 'supervisor';
 export type TurnoCurso = 'mañana' | 'tarde' | 'vespertino';
 export type EstadoAula = State;
 
 interface SeedUser {
     name: string;
     password: string;
-    DNI: number;
     roles: EscolarRoles[];
     isActive: boolean;
 }
@@ -49,22 +48,19 @@ export const initialData: SeedData = {
         {
             name: 'Santiago Robles',
             password: bcrypt.hashSync('SanUel82025', 10),
-            DNI: 49675829,
-            roles: ['admin', 'docente'],
+            roles: ['admin', 'secretario', 'docente'],
             isActive: true,
         },
         {
             name: 'Bianca Docente',
             password: bcrypt.hashSync('Docente123!', 10),
-            DNI: 45123456,
             roles: ['docente'],
             isActive: true,
         },
         {
             name: 'Secretaria General',
             password: bcrypt.hashSync('Secretaria123!', 10),
-            DNI: 38987654,
-            roles: ['secretaria'],
+            roles: ['secretario'],
             isActive: true,
         }
     ],
