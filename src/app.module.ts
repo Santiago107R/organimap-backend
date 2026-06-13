@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AulaModule } from './aula/aula.module';
 import { CommonModule } from './common/common.module';
 import { CursoModule } from './curso/curso.module';
-import { DocenteAulaModule } from './docente-aula/docente-aula.module';
 import { MateriaModule } from './materia/materia.module';
 import { AuthModule } from './auth/auth.module';
 import { AulaSocketModule } from './aula-socket/aula-socket.module';
 import { SeedModule } from './seed/seed.module';
+import { ClaseModule } from './clase/clase.module';
 
 @Module({
   imports: [
@@ -45,7 +45,7 @@ import { SeedModule } from './seed/seed.module';
 
     MateriaModule,
     
-    DocenteAulaModule,
+    ClaseModule,
     
     AulaSocketModule,
     
