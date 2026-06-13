@@ -13,7 +13,7 @@ export class AulaService {
 
   constructor(
     @InjectRepository(Aula)
-    private AulaRepository: Repository<Aula>
+    private readonly AulaRepository: Repository<Aula>
   ) { }
 
   async create(createAulaDto: CreateAulaDto) {
