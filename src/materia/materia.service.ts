@@ -34,7 +34,7 @@ export class MateriaService {
     const [materias, total] = await this.materiaRepository.findAndCount({
       take: limit,
       relations: {
-        docenteAula: true,
+        clase: true,
       },
       skip: offset,
       where: {
@@ -55,7 +55,7 @@ export class MateriaService {
     const materia = await this.materiaRepository.findOne({
       where: { id },
       relations: {
-        docenteAula: true,
+        clase: true,
       },
     });
 

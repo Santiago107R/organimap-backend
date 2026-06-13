@@ -79,7 +79,7 @@ export class AuthService {
     const { limit = 10, offset = 0, query = undefined, roles = undefined } = paginationDto;
 
     const queryBuilder = this.userRespository.createQueryBuilder('user')
-      .leftJoinAndSelect('user.docenteAula', 'docenteAula')
+      .leftJoinAndSelect('user.clase', 'clase')
       .take(limit)
       .skip(offset);
 
@@ -111,7 +111,7 @@ export class AuthService {
     const user = await this.userRespository.findOne({
       where: { id },
       relations: {
-        docenteAula: true,
+        clase: true,
       },
     });
 

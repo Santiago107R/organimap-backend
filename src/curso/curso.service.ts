@@ -35,7 +35,7 @@ export class CursoService {
       take: limit,
       skip: offset,
       relations: {
-        docenteAula: true,
+        clase: true,
       },
       where: {
         name: query ? ILike(`%${query}%`) : undefined
@@ -55,7 +55,7 @@ export class CursoService {
     const curso = await this.cursoRepository.findOne({
       where: { id },
       relations: {
-        docenteAula: true,
+        clase: true,
       },
     });
 

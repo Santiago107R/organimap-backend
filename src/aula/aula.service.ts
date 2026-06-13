@@ -48,7 +48,7 @@ export class AulaService {
         take: limit,
         skip: offset,
         relations: {
-          docenteAula: true,
+          clase: true,
         },
         where,
       })
@@ -69,7 +69,7 @@ export class AulaService {
     const aula = await this.AulaRepository.findOne({
       where: { id },
       relations: {
-        docenteAula: true,
+        clase: true,
       },
     });
 
