@@ -41,8 +41,8 @@ export class ClaseService {
         ]);
 
         if (!user) throw new BadRequestException(`User no encontrado con id ${userId}`);
-        if (!user.roles?.includes('docente')) {
-            throw new BadRequestException('El usuario no tiene rol docente');
+        if (!user.roles?.includes('user')) {
+            throw new BadRequestException('El usuario no tiene rol user');
         }
         if (!aula) throw new BadRequestException(`Aula no encontrada con id ${aulaId}`);
         if (!curso) throw new BadRequestException(`Curso no encontrado con id ${cursoId}`);
@@ -87,8 +87,8 @@ export class ClaseService {
         if (userId) {
             user = await this.userRepository.findOneBy({ id: userId });
             if (!user) throw new NotFoundException(`User no encontrado con id ${userId}`);
-            if (!user.roles?.includes('docente')) {
-                throw new BadRequestException('El usuario no tiene rol docente');
+            if (!user.roles?.includes('user')) {
+                throw new BadRequestException('El usuario no tiene rol user');
             }
         }
 
