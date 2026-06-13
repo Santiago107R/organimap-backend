@@ -9,7 +9,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Clase {
     @ApiProperty({
         example: 'e4809c2f-d26d-44ea-9f58-d15dba3cd3ac',
-        description: 'DocenteAula ID',
+        description: 'Clase ID',
     })
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -20,10 +20,10 @@ export class Clase {
     })
     @ManyToOne(
         () => User,
-        (user) => user.docenteAula,
+        (user) => user.clase,
         { eager: true, nullable: false },
     )
-    @JoinColumn({ name: 'docenteId' })
+    @JoinColumn({ name: 'userId' })
     user: User;
 
     @ApiProperty({
@@ -32,7 +32,7 @@ export class Clase {
     })
     @ManyToOne(
         () => Aula,
-        (aula) => aula.docenteAula,
+        (aula) => aula.clase,
         { eager: true, nullable: false },
     )
     @JoinColumn({ name: 'aulaId' })
@@ -44,7 +44,7 @@ export class Clase {
     })
     @ManyToOne(
         () => Curso,
-        (curso) => curso.docenteAula,
+        (curso) => curso.clase,
         { eager: true, nullable: false },
     )
     @JoinColumn({ name: 'cursoId' })
@@ -56,7 +56,7 @@ export class Clase {
     })
     @ManyToOne(
         () => Materia,
-        (materia) => materia.docenteAula,
+        (materia) => materia.clase,
         { eager: true, nullable: false },
     )
     @JoinColumn({ name: 'materiaId' })
@@ -64,14 +64,14 @@ export class Clase {
 
     @ApiProperty({
         example: 'Lunes',
-        description: 'DocenteAula Day',
+        description: 'clase Day',
     })
     @Column('text')
     day: string;
 
     @ApiProperty({
         example: '17:45-19:45',
-        description: 'DocenteAula Schedule',
+        description: 'clase Schedule',
     })
     @Column('text')
     schedule: string;
